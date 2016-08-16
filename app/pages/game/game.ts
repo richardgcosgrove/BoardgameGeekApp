@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Data } from '../../providers/data/data';
 import {Observable} from 'rxjs';
@@ -19,13 +19,26 @@ import {Observable} from 'rxjs';
 export class GamePage {
   id: string;
   thing: Observable<JSON>;
+  showDescription: boolean = true;
+  Description: string;
 
-  constructor(private navCtrl: NavController, private params: NavParams, private data: Data) {
+  constructor(private navCtrl: NavController, private cd: ChangeDetectorRef, private params: NavParams, private data: Data) {
     this.id = params.get('id');
   }
 
   ngOnInit(): void {
     this.thing = this.data.getThing(this.id);
+    this.thing.subscribe(res =>
+    {
+      if (res['description']) {
+        this.Description = ((String)(res['description'])).replace(/&#10;/g, '\r\n').replace(/&ldquo;|&rdquo;/g, '"');
+      }
+    });
+  }
+
+  toggleShowDescription(): void {
+    this.showDescription = !this.showDescription;
+    this.cd.markForCheck();
   }
 
   openGame(id: string): void {

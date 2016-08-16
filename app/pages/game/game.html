@@ -30,6 +30,10 @@
         <span style="float:left">{{(thing | async)?.bggRating}}</span><span style="float:right">Avg: {{(thing | async)?.averageRating}}</span>
       </div>
     </ion-item>
+    <button full no-lines primary (click)="toggleShowDescription()">Description</button>
+    <p *ngIf='showDescription'>
+      {{Description}}
+    </p>
     <ion-title *ngIf="(thing | async)?.expansions?.length > 0"> Expansions </ion-title>
     <ion-list>
       <button ion-item *ngFor="let expansion of (thing | async)?.expansions" (click)="openGame(expansion.gameId)">
