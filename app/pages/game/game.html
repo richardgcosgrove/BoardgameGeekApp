@@ -4,39 +4,37 @@
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header *ngIf="thing">
-
-  <ion-navbar >
+<ion-header>
+  <ion-navbar [attr.secondary]="isExpansion ? true : null">
     <ion-title>
-      <span>{{(thing | async)?.name}} ({{(thing | async)?.yearPublished}})</span>
-      <span secondary> #{{(thing | async)?.rank}}</span>
+      <span>{{thing?.name}} ({{thing?.yearPublished}})</span>
+      <span secondary *ngIf="isExpansion ? null : true"> #{{thing?.rank}}</span>
     </ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
-<ion-content padding *ngIf="thing">
-    <img start [src]="(thing | async)?.image" />
+<ion-content padding>
+    <img start [src]="thing?.image" />
     <ion-item no-lines>
       <div primary>Players</div>
       <div>
-        {{(thing | async)?.minPlayers}}-{{(thing | async)?.maxPlayers}}
+        {{thing?.minPlayers}}-{{thing?.maxPlayers}}
       </div>
     </ion-item>
     <ion-item no-lines>
       <div primary>Rating</div>
       <div>
-        <span style="float:left">{{(thing | async)?.bggRating}}</span><span style="float:right">Avg: {{(thing | async)?.averageRating}}</span>
+        <span style="float:left">{{thing?.bggRating}}</span><span style="float:right">Avg: {{thing?.averageRating}}</span>
       </div>
     </ion-item>
     <button full no-lines primary (click)="toggleShowDescription()">Description</button>
     <p *ngIf='showDescription'>
       {{Description}}
     </p>
-    <ion-title *ngIf="(thing | async)?.expansions?.length > 0"> Expansions </ion-title>
+    <ion-title *ngIf="thing?.expansions?.length > 0"> Expansions </ion-title>
     <ion-list>
-      <button ion-item *ngFor="let expansion of (thing | async)?.expansions" (click)="openGame(expansion.gameId)">
+      <button ion-item *ngFor="let expansion of thing?.expansions" (click)="openGame(expansion.gameId)">
         {{expansion.name}}
       </button> 
     </ion-list>
