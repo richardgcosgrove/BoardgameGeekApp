@@ -16,13 +16,10 @@ export class Data {
   static BASE_URL: string = 'https://bgg-json.azurewebsites.net';
 
   constructor(public http: Http) {
-
   }
 
   query(URL: string): Observable<any[]> {
     let queryString = `${Data.BASE_URL}${URL}`;
-
-    console.log(queryString);
 
     return this.http.get(queryString).map((res: any) => {
       return res.json();
