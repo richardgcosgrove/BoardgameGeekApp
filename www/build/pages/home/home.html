@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-navbar danger>
+    <ion-title>
+      BGG Hot List
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <button ion-item *ngFor="let game of (hot)" (click)="openGame(game.gameId)" >
+      <img start [src]="game.thumbnail" />
+      <h5>
+        {{game.name}} ({{game.yearPublished}})
+      </h5>
+    </button>
+  </ion-list>
+</ion-content>
